@@ -4,8 +4,8 @@ jobs:
       docker:
         -image: circleci/node:12
       steps:
-        -checkout
-        -run: 
+        - checkout
+        - run: 
           name: Install npm dependecies
           command: |
             npm install --save
@@ -13,10 +13,10 @@ jobs:
       docker:
         image: circleci/node:12
       steps:
-        -checkout
-        -setup_remote_docker:
-          docker_layer_cachine: false
-        -run:
+        - checkout
+        - setup_remote_docker:
+          docker_layer_caching: false
+        - run:
           name: Build Docker image
           command: |
             docker build -t nodewebapp -t yasminech/nodewebapp:latest .
@@ -24,7 +24,8 @@ jobs:
             docker push yasminech/nodewebapp:latest 
 
 workflows:
+   version : 2
   build_test:
     jobs:
-      -build_test
-      -build_docker_image         
+      - build_test
+      - build_docker_image         
