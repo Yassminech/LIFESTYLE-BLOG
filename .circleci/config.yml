@@ -1,0 +1,30 @@
+version: 2.1
+jobs:
+    build_test:
+      docker:
+        -image: circleci/node:12
+      steps:
+        -checkout
+        -run: 
+          name: Install npm dependecies
+          command: |
+            npm install --save
+    build_docker_image:
+      docker:
+        image: circleci/node:12
+      steps:
+        -checkout
+        -setup_remote_docker:
+          docker_layer_cachine: false
+        -run:
+          name: Build Docker image
+          command: |
+            docker build -t nodewebapp -t yasminech/nodewebapp:latest .
+            echo $DOCKER_PASSWORD | docker login -u yasminech --password-stdin
+            docker push yasminech/nodewebapp:latest 
+
+workflows:
+  build_test:
+    jobs:
+      -build_test
+      -build_docker_image         
