@@ -10,18 +10,18 @@ jobs:
           command: |
             npm install --save
     build_docker_image:
-      docker:
-        - image: circleci/node:12
-      steps:
-        - checkout
-        - setup_remote_docker:
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout
+      - setup_remote_docker:
           docker_layer_caching: false
-        - run:
+      - run:
           name: Build Docker image
           command: |
             docker build -t nodewebapp -t yasminech/nodewebapp:latest .
             echo $DOCKER_PASSWORD | docker login -u yasminech --password-stdin
-            docker push yasminech/nodewebapp:latest 
+            docker push yasminech/nodewebapp:latest
 
 workflows:
   build_test:
