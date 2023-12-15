@@ -22,15 +22,9 @@ jobs:
             docker build -t nodewebapp -t yasminech/nodewebapp:latest .
             echo $DOCKER_PASSWORD | docker login -u yasminech --password-stdin
             docker push yasminech/nodewebapp:latest 
-            
+
 workflows:
   build_test:
     jobs:
-<<<<<<< HEAD
       - build_test
       - build_docker_image         
-=======
-      -build_test
-      -build_docker_image      
-      
->>>>>>> 1f1347863520eddec6adddaa674c85f9f4a41e0b
